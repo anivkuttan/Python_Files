@@ -1,0 +1,524 @@
+# simple calculator creating.....
+
+import tkinter
+from tkinter import *
+
+root = tkinter.Tk()
+root.title("Simple Calculator")
+root.geometry("400x500")
+root.resizable(0, 0)
+
+
+# To creating and packing frame........
+
+
+number_frame_1 = Frame(root, bg="white")
+number_frame_1.pack(expand=True, fill="both")
+
+
+number_frame_2 = Frame(root, bg="white")
+number_frame_2.pack(expand=True, fill="both")
+
+# frame 7,8,9....
+number_frame_3 = Frame(root, bg="white")
+number_frame_3.pack(expand=True, fill="both")
+
+# frame 4,5,6...
+number_frame_4 = Frame(root, bg="white")
+number_frame_4.pack(expand=True, fill="both")
+
+# frame 1,2,3...
+number_frame_5 = Frame(root, bg="white")
+number_frame_5.pack(expand=True, fill="both")
+
+# Zero layer....
+number_frame_6 = Frame(root, bg="white")
+number_frame_6.pack(expand=True, fill="both")
+
+
+# Global variables......
+
+math = ""
+first_number_memory = ""
+second_number = ""
+answer_number_3 = ""
+answer_number_4 = ""
+# count = 0
+
+# To press button.....
+
+
+def buttons_clicked(number):
+    global first_number_memory
+    global math
+    global second_number
+    global answer_number_3
+    global answer_number_4
+    # global count
+
+    down_label.set("")
+    # answer_number_3 = first_number_memory
+    if math == "":
+        first_number_memory = str(first_number_memory) + str(number)
+        down_label.set(first_number_memory)
+        upper_label.set(first_number_memory)
+
+    elif math == "+" or "-" or "x" or "/":
+        # if count == 1:
+        #     down_label.set("")
+        #     answer_number_4 = str(second_number) + str(number)
+        #     down_label.set(answer_number_4)
+        #     upper_label.set(str(first_number_memory) + str(math) + str(answer_number_4))
+        down_label.set("")
+        second_number = str(second_number) + str(number)
+        down_label.set(second_number)
+        upper_label.set(str(first_number_memory) + str(math) + str(second_number))
+
+
+def button_operator(operator):
+    global math
+    small_label_operator.set(operator)
+    upper_label.set(str(first_number_memory) + str(operator))
+    math = operator
+
+
+def button_equal_clicked():
+    global answer_number_3
+    global first_number_memory
+    global second_number
+    # global count
+    global math
+    # count = 1
+    try:
+        if math == "+":
+            down_label.set("")
+            small_label_operator.set("")
+            answer_number_3 = int(first_number_memory) + int(second_number)
+            down_label.set(answer_number_3)
+            upper_label.set("")
+            first_number_memory = answer_number_3  # to make loop among 1st num, 2nd num, and answer
+            second_number = ""
+            math = ""
+
+        elif math == "-":
+            down_label.set("")
+            small_label_operator.set("")
+            answer_number_3 = int(first_number_memory) - int(second_number)
+            down_label.set(answer_number_3)
+            upper_label.set("")
+            first_number_memory = answer_number_3
+            second_number = ""
+            math = ""
+
+        elif math == "x":
+            down_label.set("")
+            small_label_operator.set("")
+            answer_number_3 = int(first_number_memory) * int(second_number)
+            down_label.set(answer_number_3)
+            upper_label.set("")
+            first_number_memory = answer_number_3
+            second_number = ""
+            math = ""
+
+        elif math == "/":
+            down_label.set("")
+            small_label_operator.set("")
+            answer_number_3 = int(first_number_memory) / int(second_number)
+            down_label.set(answer_number_3)
+            upper_label.set("")
+            first_number_memory = answer_number_3
+            second_number = ""
+            math = ""
+    except ZeroDivisionError:
+        down_label.set("Can't Divide by Zero")
+
+
+def button_clear1():
+    global first_number_memory
+    global second_number
+    global math
+    # global count
+    down_label.set("")
+    small_label_operator.set("")
+    first_number_memory = ""
+    second_number = ""
+    math = ""
+    # count = 0
+    upper_label.set("")
+
+
+# To creating a small label.....
+
+font = "verdana", 18
+small_label_operator = StringVar()
+small_label = Label(number_frame_2,
+                    bg="white",
+                    font=font,
+                    padx=2, pady=3,
+                    textvariable=small_label_operator
+                    )
+small_label.pack(side=LEFT)
+
+# To creating a upper label.....
+
+upper_label = StringVar()
+big1_label = Label(number_frame_1,
+                   bg="WHITE",
+                   font=("free ink", 18),
+                   fg="#858583",
+                   textvariable=upper_label,
+                   anchor=E
+                   )
+big1_label.pack(expand=True, fill="both")
+
+# To creating a down label.....
+
+down_label = StringVar()
+big2_label = Label(number_frame_2,
+                   bg="white",
+                   font=("free ink", 25),
+                   textvariable=down_label,
+                   anchor=SE
+                   )
+big2_label.pack(expand=True, fill="both")
+
+
+# To creating buttons and packing.....On 7,8,9....
+
+button_7 = Button(number_frame_3,
+                  text="7",
+                  font=font,
+                  relief=GROOVE, border=0, bg="white",
+                  command=lambda: buttons_clicked(7)
+                  )
+button_7.pack(side=LEFT, expand=True, fill="both", padx=3, pady=3)
+
+button_8 = Button(number_frame_3,
+                  text="8",
+                  font=font,
+                  relief=GROOVE, border=0, bg="white",
+                  command=lambda: buttons_clicked(8)
+                  )
+button_8.pack(side=LEFT, expand=True, fill="both", padx=3, pady=3)
+
+button_9 = Button(number_frame_3,
+                  text="9",
+                  font=font,
+                  relief=GROOVE, border=0, bg="white",
+                  command=lambda: buttons_clicked(9)
+                  )
+button_9.pack(side=LEFT, expand=True, fill="both",  padx=3, pady=3)
+
+button_division = Button(number_frame_3,
+                         text="/",
+                         font=font,
+                         relief=GROOVE, border=0, bg="WHITE",
+                         command=lambda: button_operator("/")
+                         )
+button_division.pack(side=LEFT, expand=True, fill="both",  padx=3, pady=3)
+
+# To creating buttons and packing.....On 4,5,6....
+
+button_4 = Button(number_frame_4,
+                  text="4",
+                  font=font,
+                  relief=GROOVE, border=0, bg="white",
+                  command=lambda: buttons_clicked(4)
+                  )
+button_4.pack(side=LEFT, expand=True, fill="both",  padx=3, pady=3)
+
+button_5 = Button(number_frame_4, text="5",
+                  font=font,
+                  relief=GROOVE, border=0, bg="white",
+                  command=lambda: buttons_clicked(5)
+                  )
+button_5.pack(side=LEFT, expand=True, fill="both",  padx=3, pady=3)
+
+button_6 = Button(number_frame_4,
+                  text="6",
+                  font=font,
+                  relief=GROOVE, border=0,
+                  bg="white",
+                  command=lambda: buttons_clicked(6)
+                  )
+button_6.pack(side=LEFT, expand=True, fill="both",  padx=3, pady=3)
+
+button_multiply = Button(number_frame_4,
+                         text="x",
+                         font=font,
+                         relief=GROOVE,
+                         border=0, bg="WHITE",
+                         command=lambda: button_operator("x")
+                         )
+button_multiply.pack(side=LEFT, expand=True, fill="both",  padx=3, pady=3)
+
+
+# To creating buttons and packing.....On 1,2,3...
+
+button_1 = Button(number_frame_5,
+                  text="1",
+                  font=font,
+                  relief=GROOVE, border=0, bg="white",
+                  command=lambda: buttons_clicked(1)
+                  )
+button_1.pack(side=LEFT, expand=True, fill="both",  padx=3, pady=3)
+
+button_2 = Button(number_frame_5,
+                  text="2",
+                  font=font,
+                  relief=GROOVE, border=0, bg="white",
+                  command=lambda: buttons_clicked(2)
+                  )
+button_2.pack(side=LEFT, expand=True, fill="both",  padx=3, pady=3)
+
+button_3 = Button(number_frame_5,
+                  text="3",
+                  font=font,
+                  relief=GROOVE, border=0, bg="white",
+                  command=lambda: buttons_clicked(3)
+                  )
+button_3.pack(side=LEFT, expand=True, fill="both",  padx=3, pady=3)
+
+button_sub = Button(number_frame_5,
+                    text="-",
+                    font=font,
+                    relief=GROOVE, border=0, bg="WHITE",
+                    command=lambda: button_operator("-")
+                    )
+button_sub.pack(side=RIGHT, expand=True, fill="both",  padx=3, pady=3)
+
+# To creating buttons and packing.....On Zero layer
+
+button_cr = Button(number_frame_6,
+                   text="C",
+                   font=font, activebackground="red",
+                   relief=GROOVE, border=0, bg="white",
+                   command=button_clear1
+                   )
+button_cr.pack(side=LEFT, expand=True, fill="both",  padx=3, pady=3)
+
+
+button_0 = Button(number_frame_6,
+                  text="0",
+                  font=font,
+                  relief=GROOVE, border=0, bg="white",
+                  command=lambda: buttons_clicked(0)
+                  )
+button_0.pack(side=LEFT, expand=True, fill="both",  padx=3, pady=3)
+
+
+button_equal = Button(number_frame_6,
+                      text="=",
+                      font=font,
+                      relief=GROOVE, border=0, bg="white",
+                      command=button_equal_clicked
+                      )
+button_equal.pack(side=RIGHT, expand=True, fill="both",  padx=3, pady=3)
+
+
+button_plus = Button(number_frame_6,
+                     text="+",
+                     font=font,
+                     relief=GROOVE, border=0, bg="WHITE",
+                     command=lambda: button_operator("+")
+                     )
+button_plus.pack(side=RIGHT, expand=True, fill="both",  padx=2, pady=2)
+
+
+# #########################################################......Make functions.......
+
+
+mouse_color = "#DEE5E2"
+
+
+def enter_plus(event):
+    button_plus.config(bg="#10AEFF")
+
+
+def left_plus(event):
+    button_plus.config(bg="WHITE")
+
+
+def enter_division(event):
+    button_division.config(bg="#10AEFF")
+
+
+def left_division(event):
+    button_division.config(bg="WHITE")
+
+
+def enter_cr(event):
+    button_cr.config(bg="#10AEFF")
+
+
+def left_cr(event):
+    button_cr.config(bg="white")
+
+
+def enter_multi(event):
+    button_multiply.config(bg="#10AEFF")
+
+
+def left_multi(event):
+    button_multiply.config(bg="WHITE")
+
+
+def enter_0(event):
+    global mouse_color
+    button_0.config(bg=mouse_color)
+
+
+def left_0(event):
+    global mouse_color
+    button_0.config(bg="white")
+
+
+def enter_1(event):
+    global mouse_color
+    button_1.config(bg=mouse_color)
+
+
+def left_1(event):
+    button_1.config(bg="white")
+
+
+def enter_2(event):
+    global mouse_color
+    button_2.config(bg=mouse_color)
+
+
+def left_2(event):
+    button_2.config(bg="white")
+
+
+def enter_3(event):
+    global mouse_color
+    button_3.config(bg=mouse_color)
+
+
+def left_3(event):
+    button_3.config(bg="white")
+
+
+def enter_4(event):
+    global mouse_color
+    button_4.config(bg=mouse_color)
+
+
+def left_4(event):
+    button_4.config(bg="white")
+
+
+def enter_5(event):
+    global mouse_color
+    button_5.config(bg=mouse_color)
+
+
+def left_5(event):
+    button_5.config(bg="white")
+
+
+def enter_6(event):
+    global mouse_color
+    button_6.config(bg=mouse_color)
+
+
+def left_6(event):
+    button_6.config(bg="white")
+
+
+def enter_7(event):
+    global mouse_color
+    button_7.config(bg=mouse_color)
+
+
+def left_7(event):
+    button_7.config(bg="white")
+
+
+def enter_8(event):
+    global mouse_color
+    button_8.config(bg=mouse_color)
+
+
+def left_8(event):
+    button_8.config(bg="white")
+
+
+def enter_9(event):
+    global mouse_color
+    button_9.config(bg=mouse_color)
+
+
+def left_9(event):
+    button_9.config(bg="white")
+
+
+def enter_sub(event):
+    button_sub.config(bg="#10AEFF")
+
+
+def left_sub(event):
+    button_sub.config(bg="WHITE")
+
+
+def enter_equal(event):
+    button_equal.config(bg="#10AEFF")
+
+
+def left_equal(event):
+    button_equal.config(bg="white")
+
+
+# #####################################################.......binding on buttons
+
+button_plus.bind("<Enter>", enter_plus)
+button_plus.bind("<Leave>", left_plus)
+
+button_sub.bind("<Enter>", enter_sub)
+button_sub.bind("<Leave>", left_sub)
+
+button_division.bind("<Enter>", enter_division)
+button_division.bind("<Leave>", left_division)
+
+button_1.bind("<Enter>", enter_1)
+button_1.bind("<Leave>", left_1)
+
+button_2.bind("<Enter>", enter_2)
+button_2.bind("<Leave>", left_2)
+
+button_3.bind("<Enter>", enter_3)
+button_3.bind("<Leave>", left_3)
+
+button_4.bind("<Enter>", enter_4)
+button_4.bind("<Leave>", left_4)
+
+button_5.bind("<Enter>", enter_5)
+button_5.bind("<Leave>", left_5)
+
+button_6.bind("<Enter>", enter_6)
+button_6.bind("<Leave>", left_6)
+
+button_7.bind("<Enter>", enter_7)
+button_7.bind("<Leave>", left_7)
+
+button_8.bind("<Enter>", enter_8)
+button_8.bind("<Leave>", left_8)
+
+button_9.bind("<Enter>", enter_9)
+button_9.bind("<Leave>", left_9)
+
+button_0.bind("<Enter>", enter_0)
+button_0.bind("<Leave>", left_0)
+
+button_equal.bind("<Enter>", enter_equal)
+button_equal.bind("<Leave>", left_equal)
+
+button_cr.bind("<Enter>", enter_cr)
+button_cr.bind("<Leave>", left_cr)
+
+button_multiply.bind("<Enter>", enter_multi)
+button_multiply.bind("<Leave>", left_multi)
+
+
+root.mainloop()
